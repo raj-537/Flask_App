@@ -10,3 +10,4 @@ gdown
 flask-cors
 Pillow
 Gunicorn
+flask cors
