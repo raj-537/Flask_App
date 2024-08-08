@@ -9,3 +9,4 @@ seaborn
 gdown
 flask-cors
 Pillow
+Gunicorn
