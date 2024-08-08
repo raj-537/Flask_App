@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Specify the path to your model weights file
-model_weights_path = 'https://drive.google.com/file/d/1IgTz9feg-lU6Uq_BJ-vsvVQnkdg98BRC/view?usp=sharing'
+model_weights_path = 'plantdoc+plantvillage.pth'
 
 # Number of classes in your classification problem
 num_classes = 5
@@ -47,15 +47,14 @@ def detect():
             raise ValueError('Image data is missing in the request.')
 
         image_data = data['image']
-        if not image_data.startswith('data:image/'):
+        if not image_data.startswith('data:image/png;base64,'):
             raise ValueError('Invalid image data format.')
 
-        # Extract the base64 part of the image data
-        image_data = image_data.split(',')[1]  # Remove the data URL scheme
+        image_data = image_data.split(',')[1]  # Remove 'data:image/png;base64,' prefix
 
-        # Decode base64 image
+        # Convert base64 to image
         image = Image.open(BytesIO(base64.b64decode(image_data)))
-        image = image.convert('RGB')  # Ensure image is in RGB mode
+        image = image.convert('RGB')
 
         # Preprocess the image
         image = preprocess(image)
@@ -74,3 +73,5 @@ def detect():
         error_message = traceback.format_exc()
         print(f"Error: {error_message}")
         return jsonify({'error': str(e)}), 500
+
+
