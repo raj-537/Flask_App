@@ -8,4 +8,4 @@ matplotlib
 seaborn
 gdown
 flask-cors
-pilloq
+pillow
